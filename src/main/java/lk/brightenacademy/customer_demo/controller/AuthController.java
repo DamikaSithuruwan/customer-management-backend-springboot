@@ -7,7 +7,11 @@ import lk.brightenacademy.customer_demo.dto.UserLoginDTO;
 import lk.brightenacademy.customer_demo.entity.User;
 import lk.brightenacademy.customer_demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.SecretKey;
@@ -27,42 +31,23 @@ public class AuthController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
     @PostMapping("/login")
     public String login(@RequestBody UserLoginDTO userLoginDTO){
-
-        String username = userLoginDTO.getUsername();
-        String password = userLoginDTO.getPassword();
-        Optional<User> optionalUser = userRepository.findByMobileOrNicOrEmail(username, username, username);
-
-        if (optionalUser.isPresent()){
-            User user = optionalUser.get();
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-            if(encoder.matches(password, user.getPassword())){
-
-                SecretKey key = Keys.hmacShaKeyFor(
-                        secret.getBytes(StandardCharsets.UTF_8)
+        Authentication authentication =
+                authenticationManager.authenticate(
+                        UsernamePasswordAuthenticationToken
+                                .unauthenticated(
+                                        userLoginDTO.getUsername(),
+                                        userLoginDTO.getPassword()
+                                )
                 );
-
-                String token = Jwts.builder()
-                        .subject(user.getId())
-                        .claim("mobile", user.getMobile())
-                        .claim("nic", user.getNic())
-                        .claim("email", user.getEmail())
-                        .issuedAt(new Date())
-                        .expiration(new Date(System.currentTimeMillis() + 3600000))
-                        .signWith(key)
-                        .compact();
-
-                return token;
-            }
-            else{
-                return "Authentication Failed";
-            }
-        }
-        else{
-            return "Authentication Failed";
-        }
+        return "Login Successful:" + authentication.getName();
     }
 
     @GetMapping("/user-details")
