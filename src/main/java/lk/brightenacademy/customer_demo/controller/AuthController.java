@@ -1,10 +1,9 @@
 package lk.brightenacademy.customer_demo.controller;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
+import lk.brightenacademy.customer_demo.dto.LoginResponseDTO;
 import lk.brightenacademy.customer_demo.dto.UserLoginDTO;
 import lk.brightenacademy.customer_demo.repository.UserRepository;
+import lk.brightenacademy.customer_demo.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -32,10 +30,10 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    JWTS jwtService;
+    JwtService jwtService;
 
     @PostMapping("/login")
-    public String login(@RequestBody UserLoginDTO userLoginDTO){
+    public LoginResponseDTO login(@RequestBody UserLoginDTO userLoginDTO){
         Authentication authentication =
                 authenticationManager.authenticate(
                         UsernamePasswordAuthenticationToken
@@ -44,7 +42,11 @@ public class AuthController {
                                         userLoginDTO.getPassword()
                                 )
                 );
-        return "Login Successful:" + authentication.getName();
+        String token = jwtService.generateToken(authentication);
+
+        LoginResponseDTO responseDTO = new LoginResponseDTO();
+        responseDTO.setToken(token);
+        return responseDTO;
     }
 
     @GetMapping("/user-details")
