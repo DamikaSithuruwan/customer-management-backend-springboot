@@ -4,13 +4,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lk.brightenacademy.customer_demo.dto.UserLoginDTO;
-import lk.brightenacademy.customer_demo.entity.User;
 import lk.brightenacademy.customer_demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,15 +16,11 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
 import java.util.HexFormat;
-import java.util.Optional;
 
 @CrossOrigin
 @RestController
 public class AuthController {
-
-    String secret = "7f3c9a1e8b6d2f04c5a7e9b1d3f6a8c2e4b7d9f1a6c8e0d2f5b3a7c9e1d4f6b8";
 
     @Autowired
     UserRepository userRepository;
@@ -36,6 +30,9 @@ public class AuthController {
 
     @Autowired
     AuthenticationManager authenticationManager;
+
+    @Autowired
+    JWTS jwtService;
 
     @PostMapping("/login")
     public String login(@RequestBody UserLoginDTO userLoginDTO){
@@ -52,7 +49,7 @@ public class AuthController {
 
     @GetMapping("/user-details")
     public void getuserDetails(@RequestHeader("Authorization") String token) {
-        SecretKey key = Keys.hmacShaKeyFor(
+        /*SecretKey key = Keys.hmacShaKeyFor(
                 secret.getBytes(StandardCharsets.UTF_8)
         );
 
@@ -65,7 +62,7 @@ public class AuthController {
         System.out.println(claims.getSubject());
         System.out.println(claims.get("mobile"));
         System.out.println(claims.get("nic"));
-        System.out.println(claims.get("email"));
+        System.out.println(claims.get("email"));*/
 
     }
 
