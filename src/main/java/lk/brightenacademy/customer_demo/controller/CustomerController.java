@@ -1,17 +1,17 @@
 package lk.brightenacademy.customer_demo.controller;
 
-import lk.brightenacademy.customer_demo.dto.CustomerDataDTO;
-import lk.brightenacademy.customer_demo.dto.CustomerDetailDTO;
-import lk.brightenacademy.customer_demo.dto.CustomerInsertDTO;
-import lk.brightenacademy.customer_demo.dto.CustomerSearchRequest;
+import lk.brightenacademy.customer_demo.dto.*;
 import lk.brightenacademy.customer_demo.entity.Customer;
+import lk.brightenacademy.customer_demo.entity.User;
 import lk.brightenacademy.customer_demo.repository.CustomerRepository;
+import lk.brightenacademy.customer_demo.service.AuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
@@ -23,6 +23,9 @@ public class CustomerController {
 
     @Autowired
     CustomerRepository customerRepository;
+
+    @Autowired
+    AuthUserService authUserService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -41,6 +44,8 @@ public class CustomerController {
         data.setId(customer.getId());
         data.setMobile(customer.getMobile());
         data.setName(customer.getName());
+        data.setNic(customer.getNic());
+        data.setCity(customer.getCity());
 
         return data;
     }
@@ -68,6 +73,8 @@ public class CustomerController {
         data.setId(customer.getId());
         data.setMobile(customer.getMobile());
         data.setName(customer.getName());
+        data.setNic(customer.getNic());
+        data.setCity(customer.getCity());
 
         return data;
 
@@ -87,9 +94,9 @@ public class CustomerController {
     }
 
     @GetMapping
-    public Page<CustomerDataDTO> getAll(@PageableDefault(size = 10) Pageable pageable,
-                                        @ModelAttribute CustomerSearchRequest searchRequest){
+    public Page<CustomerDataDTO> getAll(@PageableDefault(size = 10) Pageable pageable, @ModelAttribute CustomerSearchRequest searchRequest){
 
+        System.out.println(authUserService.getAuthUserId());
         Specification<Customer> specs = searchRequest.getSpecification();
 
         Page<Customer> customers = customerRepository.findAll(specs,pageable);
@@ -126,7 +133,21 @@ public class CustomerController {
             data.setCreatedAt(customer.getCreatedAt());
             data.setUpdatedAt(customer.getUpdatedAt());
 
-            return data;
+            User createdByUser = customer.getCreatedBy();
+            if(createdByUser != null){
+                AuditUserDTO createdByAuditUser = new AuditUserDTO(createdByUser.getId(), createdByUser.getDisplayName());
+                data.setCreatedBy(createdByAuditUser);
+            }
+
+
+            User updatedByUser = customer.getUpdatedBy();
+            if(updatedByUser != null){
+                AuditUserDTO updatedByAuditUser = new AuditUserDTO(updatedByUser.getId(), updatedByUser.getDisplayName());
+                data.setUpdatedBy(updatedByAuditUser);
+            }
+
+
+        return data;
     }
 
 }

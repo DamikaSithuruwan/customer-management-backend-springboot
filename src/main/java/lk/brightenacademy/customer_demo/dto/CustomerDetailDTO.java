@@ -8,6 +8,8 @@ public class CustomerDetailDTO extends CustomerDataDTO{
     private LocalDate dob;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private  AuditUserDTO CreatedBy;
+    private AuditUserDTO UpdatedBy;
 
     public CustomerDetailDTO(){
 
@@ -49,6 +51,22 @@ public class CustomerDetailDTO extends CustomerDataDTO{
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public AuditUserDTO getCreatedBy() {
+        return CreatedBy;
+    }
+
+    public void setCreatedBy(AuditUserDTO createdBy) {
+        CreatedBy = createdBy;
+    }
+
+    public AuditUserDTO getUpdatedBy() {
+        return UpdatedBy;
+    }
+
+    public void setUpdatedBy(AuditUserDTO updatedBy) {
+        UpdatedBy = updatedBy;
     }
 }
 
