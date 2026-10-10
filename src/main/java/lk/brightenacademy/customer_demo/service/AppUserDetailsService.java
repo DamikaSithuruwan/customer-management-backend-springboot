@@ -43,7 +43,8 @@ public class AppUserDetailsService implements UserDetailsService {
 
             @Override
             public String getUsername() {
-                return username;
+
+                return user.getId().toString();
             }
         };
         return userDetails;
