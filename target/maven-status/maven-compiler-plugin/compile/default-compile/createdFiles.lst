@@ -1,4 +1,6 @@
 lk\brightenacademy\customer_demo\config\SecurityConfig.class
+lk\brightenacademy\customer_demo\dto\RoleInsertDTO.class
+lk\brightenacademy\customer_demo\dto\RoleDataWithPermissionDTO.class
 lk\brightenacademy\customer_demo\config\JpaConfig.class
 lk\brightenacademy\customer_demo\repository\CustomerRepository.class
 lk\brightenacademy\customer_demo\service\AuthUserService.class
@@ -10,6 +12,8 @@ lk\brightenacademy\customer_demo\repository\PermissionRepository.class
 lk\brightenacademy\customer_demo\repository\UserRepository.class
 lk\brightenacademy\customer_demo\repository\RoleRepository.class
 lk\brightenacademy\customer_demo\dto\CustomerDataDTO.class
+lk\brightenacademy\customer_demo\dto\RoleDetailDTO.class
+lk\brightenacademy\customer_demo\dto\PermissionDTO.class
 lk\brightenacademy\customer_demo\dto\AuditUserDTO.class
 lk\brightenacademy\customer_demo\dto\CustomerDetailDTO.class
 lk\brightenacademy\customer_demo\service\JwtService.class
@@ -20,8 +24,10 @@ lk\brightenacademy\customer_demo\controller\CustomerController.class
 lk\brightenacademy\customer_demo\dto\CustomerInsertDTO.class
 lk\brightenacademy\customer_demo\service\AppUserDetailsService.class
 lk\brightenacademy\customer_demo\config\AuditorAwareImpl.class
+lk\brightenacademy\customer_demo\controller\RoleController.class
 lk\brightenacademy\customer_demo\entity\Permission.class
 lk\brightenacademy\customer_demo\dto\UserLoginDTO.class
+lk\brightenacademy\customer_demo\dto\RoleDataDTO.class
 lk\brightenacademy\customer_demo\entity\Customer.class
 lk\brightenacademy\customer_demo\dto\CustomerSearchRequest.class
 lk\brightenacademy\customer_demo\entity\AuditableEntity.class

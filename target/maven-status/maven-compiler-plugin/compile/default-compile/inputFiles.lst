@@ -4,6 +4,7 @@ C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\bright
 C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\config\SecurityConfig.java
 C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\controller\AuthController.java
 C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\controller\CustomerController.java
+C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\controller\RoleController.java
 C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\CustomerDemoApplication.java
 C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\dto\AuditUserDTO.java
 C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\dto\CustomerDataDTO.java
@@ -11,6 +12,11 @@ C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\bright
 C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\dto\CustomerInsertDTO.java
 C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\dto\CustomerSearchRequest.java
 C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\dto\LoginResponseDTO.java
+C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\dto\PermissionDTO.java
+C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\dto\RoleDataDTO.java
+C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\dto\RoleDataWithPermissionDTO.java
+C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\dto\RoleDetailDTO.java
+C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\dto\RoleInsertDTO.java
 C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\dto\UserLoginDTO.java
 C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\entity\AuditableEntity.java
 C:\Sample Project\customer-management-backend-springboot\src\main\java\lk\brightenacademy\customer_demo\entity\Customer.java
