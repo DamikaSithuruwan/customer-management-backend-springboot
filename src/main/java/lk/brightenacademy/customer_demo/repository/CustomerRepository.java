@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer>, JpaSpecificationExecutor<Customer> {
+
+    boolean existsByMobile(String mobile);
+    boolean existsByNic(String nic);
 }

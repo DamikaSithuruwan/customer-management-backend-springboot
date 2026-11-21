@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
@@ -30,6 +29,21 @@ public class CustomerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDataDTO add(@RequestBody CustomerInsertDTO requestData){
+
+        if (requestData.getMobile() != null && !requestData.getMobile().isBlank() && customerRepository.existsByMobile(requestData.getMobile())){
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "This mobile number is already exists."
+            );
+        }
+
+        if (requestData.getNic() != null && !requestData.getNic().isBlank() && customerRepository.existsByNic(requestData.getNic())){
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "This NIC number is already exists."
+            );
+        }
+
         Customer customer = new Customer();
         customer.setName( requestData.getName() );
         customer.setMobile(requestData.getMobile());

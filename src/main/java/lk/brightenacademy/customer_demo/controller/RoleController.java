@@ -27,6 +27,7 @@ public class RoleController {
     PermissionRepository permissionRepository;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public RoleDataDTO add(@RequestBody RoleInsertDTO data){
         Role role = new Role();
 
