@@ -30,14 +30,18 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDataDTO add(@RequestBody CustomerInsertDTO requestData){
 
-        if (requestData.getMobile() != null && !requestData.getMobile().isBlank() && customerRepository.existsByMobile(requestData.getMobile())){
+        Optional<Customer> optionalCustomer = customerRepository.findByMobile(requestData.getMobile());
+        if(optionalCustomer.isPresent()){
+
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
                     "This mobile number is already exists."
             );
         }
 
-        if (requestData.getNic() != null && !requestData.getNic().isBlank() && customerRepository.existsByNic(requestData.getNic())){
+        optionalCustomer = customerRepository.findByNic(requestData.getNic());
+        if(optionalCustomer.isPresent()){
+
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
                     "This NIC number is already exists."

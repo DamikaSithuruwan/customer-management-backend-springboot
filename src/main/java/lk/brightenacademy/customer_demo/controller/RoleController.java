@@ -29,6 +29,16 @@ public class RoleController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public RoleDataDTO add(@RequestBody RoleInsertDTO data){
+
+        Optional<Role> optionalRole = roleRepository.findByName(data.getName());
+
+        if(optionalRole.isPresent()){
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "This role name already exists."
+            );
+        }
+
         Role role = new Role();
 
         role.setName(data.getName());
