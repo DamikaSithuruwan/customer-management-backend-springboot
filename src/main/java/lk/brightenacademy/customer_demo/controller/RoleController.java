@@ -6,6 +6,7 @@ import lk.brightenacademy.customer_demo.entity.Role;
 import lk.brightenacademy.customer_demo.entity.User;
 import lk.brightenacademy.customer_demo.repository.PermissionRepository;
 import lk.brightenacademy.customer_demo.repository.RoleRepository;
+import lk.brightenacademy.customer_demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -22,6 +25,9 @@ public class RoleController {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     PermissionRepository permissionRepository;
@@ -66,10 +72,17 @@ public class RoleController {
         List<Role> roles = roleRepository.findAll();
         List<RoleDataWithPermissionDTO> response = new ArrayList<>();
 
+        Map<Integer, Long> userCounts = userRepository.countUsersGroupedByRole()
+                .stream()
+                .collect(Collectors.toMap(
+                        UserRepository.RoleUserCount::getRoleId,
+                        UserRepository.RoleUserCount::getTotal));
+
         for(Role role:roles){
             RoleDataWithPermissionDTO roleDataDTO = new RoleDataWithPermissionDTO();
             roleDataDTO.setId(role.getId());
             roleDataDTO.setName(role.getName());
+            roleDataDTO.setUserCount(userCounts.getOrDefault(role.getId(), 0L));
 
             List<Permission> permissions = role.getPermissions();
             List<PermissionDTO> permissionDTOList = new ArrayList<>();
